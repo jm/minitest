@@ -56,7 +56,9 @@ module Kernel
     cls.nuke_test_methods!
 
     stack.push cls
+    MiniTest::Spec.description_stack.push desc
     cls.class_eval(&block)
+    MiniTest::Spec.description_stack.pop
     stack.pop
   end
   private :describe
@@ -68,6 +70,11 @@ class MiniTest::Spec < MiniTest::Unit::TestCase
     @@describe_stack
   end
 
+  @@description_stack = []
+  def self.description_stack
+    @@description_stack
+  end
+  
   def self.current
     @@current_spec
   end
@@ -103,6 +110,6 @@ class MiniTest::Spec < MiniTest::Unit::TestCase
   end
 
   def self.it desc, &block
-    define_method "test_#{desc.gsub(/\W+/, '_').downcase}", &block
+    define_method "test_#{description_stack.join(' ').gsub(/\W+/, '_')}_#{desc.gsub(/\W+/, '_').downcase}", &block
   end
 end
