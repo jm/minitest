@@ -160,4 +160,26 @@ describe MiniTest::Spec do
     [1, 2, 3].wont_include(5).must_equal false
     proc { [1, 2, 3].wont_include 2 }.must_raise MiniTest::Assertion
   end
+  
+  describe "nested describe blocks" do
+    before do
+      @assertion_count = 1
+      @var = 0
+    end
+    it "must be zero" do
+      @var.must_equal 0
+    end
+    describe "should clear" do
+      before { @var += 1 }
+      it "must be one" do
+        @var.must_equal 1
+      end
+      describe "their parent block's methods" do
+        before { @var += 1 }
+        it "must be two" do
+          @var.must_equal 2
+        end
+      end
+    end
+  end
 end

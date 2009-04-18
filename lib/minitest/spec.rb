@@ -86,7 +86,7 @@ class MiniTest::Spec < MiniTest::Unit::TestCase
 
   def self.nuke_test_methods!
     self.public_instance_methods.grep(/^test_/).each do |name|
-      send :remove_method, name rescue nil
+      send :undef_method, name rescue nil
     end
   end
 
