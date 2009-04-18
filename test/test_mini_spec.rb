@@ -183,5 +183,20 @@ describe MiniTest::Spec do
         end
       end
     end
+    
+    describe "should allow their descendents" do
+      describe "have similar descriptions" do
+        it "must be zero" do
+          @var.must_equal 0
+        end
+      end
+    end
+    describe "should let their descendents" do
+      describe "have similar descriptions" do
+        it "must be zero" do
+          @var.must_equal 0
+        end
+      end
+    end
   end
 end
