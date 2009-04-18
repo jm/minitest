@@ -150,15 +150,17 @@ describe MiniTest::Spec do
   end
 
   it "needs to be sensible about must_include order" do
-    @assertion_count = 6
+    @assertion_count = 9
     [1, 2, 3].must_include(2).must_equal true
     proc { [1, 2, 3].must_include 5 }.must_raise MiniTest::Assertion
+    %w(foo bar baz).must_include("foo").must_equal true
   end
 
   it "needs to be sensible about wont_include order" do
-    @assertion_count = 6
+    @assertion_count = 9
     [1, 2, 3].wont_include(5).must_equal false
     proc { [1, 2, 3].wont_include 2 }.must_raise MiniTest::Assertion
+    %w(foo bar baz).wont_include("bee").must_equal false
   end
   
   describe "nested describe blocks" do
